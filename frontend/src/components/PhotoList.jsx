@@ -69,8 +69,7 @@ const PhotoList = (props) => {
   photoId={DataForPhotoListItem["id"]}
   switchLike={switchLike}
   likedPhotos={likedPhotos}
-  openModal={openModal}
-  modalOpen={modalOpen}/>)
+  openModal={openModal} />)
   
   return (
     <ul className="photo-list">

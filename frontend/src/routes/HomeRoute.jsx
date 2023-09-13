@@ -28,7 +28,7 @@ return (
     <div className="home-route">
       <TopNavigation likedPhotos={likedPhotos} />
       {/* Nav needs the inital amount  of liked photos(state) as props!!! */}
-      <PhotoList likedPhotos={likedPhotos} switchLike={switchLike} photos={photos} openModal={openModal} modalOpen={modalOpen}/>
+      <PhotoList likedPhotos={likedPhotos} switchLike={switchLike} photos={photos} openModal={openModal} />
     </div>
   );
 };

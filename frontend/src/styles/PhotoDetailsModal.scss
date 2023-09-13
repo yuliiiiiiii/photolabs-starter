@@ -22,6 +22,7 @@
   cursor: pointer;
   margin-left: 16px;
   margin-top: 16px;
+  margin-top: 16px;
 }
 
 .photo-details-modal__images {
@@ -30,7 +31,7 @@
 }
 
 .photo-details-modal__image {
-  max-width: 95%;
+  max-width: 90%;
   border-radius: 8px;
   margin: 0 auto;
 }
@@ -45,14 +46,14 @@
 
 .Header {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
+  position: relative;
 }
 
 .photo-details-modal__photographer-details {
   display: flex;
   font-size: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid lightgray;
 }
 
 .photo-details-modal__header {
@@ -60,6 +61,5 @@
   font-weight: 500;
   color: #1e1e1e;
   margin-top: 24px;
-  margin-bottom: 24px;
   width: 90%;
 }

@@ -21,7 +21,7 @@ import "../styles/PhotoListItem.scss";
 const PhotoListItem = (props) => {
   const {urls, location, user} = props.DataForPhotoListItem;
    // got props from PhotoList.jsx
-  const {switchLike, likedPhotos, photoId, openModal, modalOpen}=props
+  const {switchLike, likedPhotos, photoId, openModal}=props
   // get the state from parent(PhotoList)
 
   const clickPhoto = () => {

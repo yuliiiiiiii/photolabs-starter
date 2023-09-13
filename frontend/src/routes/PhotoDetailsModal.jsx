@@ -6,7 +6,7 @@ import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = (props) => {
-  const {closeModal, selectedPhoto, likedPhotos, switchLike, modalOpen}=props;
+  const {closeModal, selectedPhoto, likedPhotos, switchLike}=props;
   const photos = Object.values(props.selectedPhoto.similar_photos)
   // selectedPhoto is an object
   // likedPhotos is an array of liked photos id
@@ -23,9 +23,10 @@ const PhotoDetailsModal = (props) => {
         <img src={closeSymbol} alt="close symbol" />
       </button>
       
-      <PhotoFavButton switchLike={switchLike} likedPhotos={likedPhotos} photoId={selectedPhoto.id} />
+      {/* <PhotoFavButton switchLike={switchLike} likedPhotos={likedPhotos} photoId={selectedPhoto.id} /> */}
       
       <div className='Header'>
+        <PhotoFavButton switchLike={switchLike} likedPhotos={likedPhotos} photoId={selectedPhoto.id} />
         <img className="photo-details-modal__image" src={selectedPhoto.urls.full} alt='full size photo' />
       </div>
         
