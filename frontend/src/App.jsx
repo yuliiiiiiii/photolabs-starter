@@ -8,6 +8,7 @@ import HomeRoute from 'routes/HomeRoute';
 import './App.scss';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 import photos from 'mocks/photos';
+import useApplicationData from 'hooks/useApplicationData';
 
 // const sampleDataForPhotoListItem = {
 //   id: "1",
@@ -31,37 +32,49 @@ import photos from 'mocks/photos';
 
 const App = () => {
   
-  const [likedPhotos, setLikedPhotos] = useState([]);
+  // const [likedPhotos, setLikedPhotos] = useState([]);
   // set the state as an array of liked photos' ids
 
   // set global state, the button to setActive is in PhotoFavButton.jsx => onClck={toggleActive}
 
-  const switchLike = (photoId) => {
+  // const switchLike = (photoId) => {
     
-   if(likedPhotos.includes(photoId)) {
-    setLikedPhotos(likedPhotos.filter(Id => Id != photoId))
-    // if the photoId whoes FavButton got clicked, already exists in the likedPhotos array, the click will remove the photoId from likedPhotos array, in order to change the photo to unliked
-   } else {
-    setLikedPhotos([...likedPhotos, photoId])
-    // if the photoId doesn't exist in likedPhotos array, the click will add the photoId into the array, so that the photo is liked
-   }
-  }
+  //  if(likedPhotos.includes(photoId)) {
+  //   setLikedPhotos(likedPhotos.filter(Id => Id != photoId))
+  //   // if the photoId whoes FavButton got clicked, already exists in the likedPhotos array, the click will remove the photoId from likedPhotos array, in order to change the photo to unliked
+  //  } else {
+  //   setLikedPhotos([...likedPhotos, photoId])
+  //   // if the photoId doesn't exist in likedPhotos array, the click will add the photoId into the array, so that the photo is liked
+  //  }
+  // }
 
-  const [modalOpen, setModalOpen]= useState(false);
-  const [selectedPhoto, setSelectedPhoto]=useState({});
+  // const [modalOpen, setModalOpen]= useState(false);
+  // const [selectedPhoto, setSelectedPhoto]=useState({});
 
-  const closeModal = () => {
-    // one function to close the modal -> pass this to modal
-    setModalOpen(false)
-  }
+  // const closeModal = () => {
+  //   // one function to close the modal -> pass this to modal
+  //   setModalOpen(false)
+  // }
 
-  const openModal = (photoId) => {
-    // another function to open modal and set selected photo details  -> pass down to HomeRoute, and called it in PhotoListItem with a photoId as parameter, in order to get the seletedPhoto state, pass down to Modal to show
-    setModalOpen(true)
+  // const openModal = (photoId) => {
+  //   // another function to open modal and set selected photo details  -> pass down to HomeRoute, and called it in PhotoListItem with a photoId as parameter, in order to get the seletedPhoto state, pass down to Modal to show
+  //   setModalOpen(true)
 
-    const photoData = photos.filter(PhotoListItemData => PhotoListItemData["id"]===photoId)[0];
-    setSelectedPhoto(photoData);
-  }
+  //   const photoData = photos.filter(PhotoListItemData => PhotoListItemData["id"]===photoId)[0];
+  //   setSelectedPhoto(photoData);
+  // }
+  const initial = [[], false, {}];
+  // an array of different initial states for differnet state defination in useApplicationData
+
+  const {
+    likedPhotos,
+    modalOpen,
+    selectedPhoto,
+    switchLike,
+    openModal,
+    closeModal
+  } = useApplicationData(initial);
+  // useApplicationData is the custom hook to store all the state data for App component, like a helper function
 
   return (
     // Note: Rendering a single component to build components in isolation
@@ -79,7 +92,7 @@ const App = () => {
       {/* {photos} */}
       {/* <PhotoList /> */}
       
-      <HomeRoute openModal={openModal} photos={photos} likedPhotos={likedPhotos} switchLike={switchLike} />
+      <HomeRoute openModal={openModal} likedPhotos={likedPhotos} switchLike={switchLike} photos={photos}/>
       {/* HomeRoute is the main page */}
       {modalOpen && <PhotoDetailsModal closeModal={closeModal} selectedPhoto={selectedPhoto} likedPhotos={likedPhotos} switchLike={switchLike} />}
       {/* each photo in PhotoListItem onClick to triger openModal(), to set the modalOpen state as true */}
