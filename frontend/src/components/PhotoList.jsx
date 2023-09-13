@@ -58,7 +58,7 @@ import "../styles/PhotoList.scss";
 // ];
 
 const PhotoList = (props) => {
-  const {likedPhotos, switchLike, photos, openModal} = props
+  const {likedPhotos, switchLike, photos, openModal, modalOpen} = props
   // get the state => [active, setactive] from global state, which is declare in HomeRoute.jsx
   
   // will need to receice photos as props
@@ -69,7 +69,8 @@ const PhotoList = (props) => {
   photoId={DataForPhotoListItem["id"]}
   switchLike={switchLike}
   likedPhotos={likedPhotos}
-  openModal={openModal}/>)
+  openModal={openModal}
+  modalOpen={modalOpen}/>)
   
   return (
     <ul className="photo-list">

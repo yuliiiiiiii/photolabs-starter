@@ -30,20 +30,37 @@ import photos from 'mocks/photos';
 
 
 const App = () => {
-     
+  
+  const [likedPhotos, setLikedPhotos] = useState([]);
+  // set the state as an array of liked photos' ids
+
+  // set global state, the button to setActive is in PhotoFavButton.jsx => onClck={toggleActive}
+
+  const switchLike = (photoId) => {
+    
+   if(likedPhotos.includes(photoId)) {
+    setLikedPhotos(likedPhotos.filter(Id => Id != photoId))
+    // if the photoId whoes FavButton got clicked, already exists in the likedPhotos array, the click will remove the photoId from likedPhotos array, in order to change the photo to unliked
+   } else {
+    setLikedPhotos([...likedPhotos, photoId])
+    // if the photoId doesn't exist in likedPhotos array, the click will add the photoId into the array, so that the photo is liked
+   }
+  }
+
   const [modalOpen, setModalOpen]= useState(false);
   const [selectedPhoto, setSelectedPhoto]=useState({});
-  
 
-  // one function to close the modal -> pass this to modal
-  // another function to open modal and set photo details url and similar photos -> pass down to HomeRoute
+  const closeModal = () => {
+    // one function to close the modal -> pass this to modal
+    setModalOpen(false)
+  }
 
   const openModal = (photoId) => {
-    !modalOpen && setModalOpen(true)
-    modalOpen && setModalOpen(false)
+    // another function to open modal and set selected photo details  -> pass down to HomeRoute, and called it in PhotoListItem with a photoId as parameter, in order to get the seletedPhoto state, pass down to Modal to show
+    setModalOpen(true)
 
-    setfullUrl(photos.filter(PhotoListItemData => PhotoListItemData["id"]===photoId)[0]["urls"]["full"]);
-    setSimilar_photos(...similar_photos, photos.filter(PhotoListItemData => PhotoListItemData["id"]===photoId)[0].similar_photos);
+    const photoData = photos.filter(PhotoListItemData => PhotoListItemData["id"]===photoId)[0];
+    setSelectedPhoto(photoData);
   }
 
   return (
@@ -62,9 +79,9 @@ const App = () => {
       {/* {photos} */}
       {/* <PhotoList /> */}
       
-      <HomeRoute openModal={openModal} photos={photos}/>
+      <HomeRoute openModal={openModal} photos={photos} likedPhotos={likedPhotos} switchLike={switchLike} modalOpen={modalOpen}/>
       {/* HomeRoute is the main page */}
-      {modalOpen && <PhotoDetailsModal openModal={openModal} />}
+      {modalOpen && <PhotoDetailsModal closeModal={closeModal} selectedPhoto={selectedPhoto} likedPhotos={likedPhotos} switchLike={switchLike} modalOpen={modalOpen}/>}
       {/* each photo in PhotoListItem onClick to triger openModal(), to set the modalOpen state as true */}
     </div>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import PhotoFavButton from "./PhotoFavButton";
 import "../styles/PhotoListItem.scss";
+
 // import the style and add className to each element to use related style, CSS scoped to only this component
 
 
@@ -20,7 +21,7 @@ import "../styles/PhotoListItem.scss";
 const PhotoListItem = (props) => {
   const {urls, location, user} = props.DataForPhotoListItem;
    // got props from PhotoList.jsx
-  const {switchLike, likedPhotos, photoId, openModal}=props
+  const {switchLike, likedPhotos, photoId, openModal, modalOpen}=props
   // get the state from parent(PhotoList)
 
   const clickPhoto = () => {

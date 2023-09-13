@@ -32,15 +32,22 @@
 .photo-details-modal__image {
   max-width: 95%;
   border-radius: 8px;
+  margin: 0 auto;
 }
 
 .photo-details-modal__top-bar {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
   margin: 16px;
   margin-top: 8px;
-  align-items: center;
+}
+
+.Header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .photo-details-modal__photographer-details {
