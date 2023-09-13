@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import photos from "mocks/photos";
 
 // This is the custom hook to store all the state data from App component
+
+
+
 const useApplicationData = (initial) => {
   // initial is initial = [[], false, {}], defined in App.js
 
   // const [likedPhotos, setLikedPhotos] = useState([]);
   const [likedPhotos, setLikedPhotos] = useState(initial[0]);
-
+ 
   // const [modalOpen, setModalOpen]= useState(false);
   const [modalOpen, setModalOpen] = useState(initial[1]);
 

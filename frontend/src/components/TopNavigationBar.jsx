@@ -4,7 +4,7 @@ import FavIcon from './FavIcon';
 import '../styles/TopNavigationBar.scss'
 
 const TopNavigation = (props) => {
- const {likedPhotos} = props;
+ const {likedPhotos, topics} = props;
  
  let isFavPhotoExist = likedPhotos.length > 0 ? true : false
 
@@ -13,7 +13,7 @@ const TopNavigation = (props) => {
     <div className="top-nav-bar">
       <span className="top-nav-bar__logo">PhotoLabs</span>
       <div className="top-nav-bar">
-       <TopicList />
+       <TopicList topics={topics}/>
        <FavIcon displayAlert={isFavPhotoExist} selected={true}/>
       </div>
     </div>
