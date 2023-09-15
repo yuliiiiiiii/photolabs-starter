@@ -22,9 +22,9 @@ import "../styles/TopicList.scss";
 
 
 const TopicList = (props) => {
-  const {topics} = props
+  const {topics, selectTopic} = props
   
-  const topicListItemsArray = topics.map(DataForTopicListItem => <TopicListItem DataForTopicListItem={DataForTopicListItem} key={DataForTopicListItem.id}/>)
+  const topicListItemsArray = topics.map(DataForTopicListItem => <TopicListItem DataForTopicListItem={DataForTopicListItem} key={DataForTopicListItem.id} id={DataForTopicListItem.id} selectTopic={selectTopic}/>)
 
   return (
     <div className="top-nav-bar__topic-list">

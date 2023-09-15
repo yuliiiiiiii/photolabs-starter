@@ -6,7 +6,8 @@ import '../styles/HomeRoute.scss';
 
 const HomeRoute = (props) => {
 // HomeRoute is the main page of the PhotoLabs app
-  const {openModal, topics, photos, likedPhotos, switchLike, modalOpen} = props
+  const {openModal, topics, photos, likedPhotos, switchLike, selectTopic} = props
+
 
   // const [likedPhotos, setLikedPhotos] = useState([]);
   // // set the state as an array of liked photos' ids
@@ -26,7 +27,7 @@ const HomeRoute = (props) => {
 
 return (
     <div className="home-route">
-      <TopNavigation likedPhotos={likedPhotos} topics={topics}/>
+      <TopNavigation likedPhotos={likedPhotos} topics={topics} selectTopic={selectTopic}/>
       {/* Nav needs the inital amount  of liked photos(state) as props!!! */}
       <PhotoList likedPhotos={likedPhotos} switchLike={switchLike} photos={photos} openModal={openModal} />
     </div>

@@ -73,11 +73,15 @@ const App = () => {
     likedPhotos,
     modalOpen,
     selectedPhoto,
+    photosByTopic, //all photoData under one topic
     switchLike,
     openModal,
-    closeModal
+    closeModal,
+    selectTopic
   } = useApplicationData(initial);
   // useApplicationData is the custom hook to store all the state data for App component, like a helper function
+ 
+  // console.log({photosByTopic})
 
   return (
     // Note: Rendering a single component to build components in isolation
@@ -95,7 +99,15 @@ const App = () => {
       {/* {photos} */}
       {/* <PhotoList /> */}
       
-      <HomeRoute openModal={openModal} likedPhotos={likedPhotos} switchLike={switchLike} topics={topicData} photos={photoData}/>
+      <HomeRoute 
+      openModal={openModal} 
+      likedPhotos={likedPhotos} 
+      switchLike={switchLike} 
+      topics={topicData} 
+      photos={photosByTopic.length === 0 ? photoData : photosByTopic } 
+      selectTopic={selectTopic}/> 
+     {/* check to show photoData or photosByTopic */}
+
       {/* HomeRoute is the main page */}
       {modalOpen && <PhotoDetailsModal closeModal={closeModal} selectedPhoto={selectedPhoto} likedPhotos={likedPhotos} switchLike={switchLike} />}
       {/* each photo in PhotoListItem onClick to triger openModal(), to set the modalOpen state as true */}

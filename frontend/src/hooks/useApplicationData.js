@@ -10,7 +10,8 @@ export const ACTIONS = {
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
   // DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
-  CLOSE_MODAL: 'CLOSE_MODAL'
+  CLOSE_MODAL: 'CLOSE_MODAL',
+  GET_PHOTOS_BY_TOPICS: "GET_PHOTOS_BY_TOPICS"
 }
 
 
@@ -31,6 +32,8 @@ function reducer(state, action) {
       return {...state, photoData: action.payload}
     case ACTIONS.SET_TOPIC_DATA:
        return {...state, topicData: action.payload}
+    case ACTIONS.GET_PHOTOS_BY_TOPICS:
+       return {...state, photosByTopic: action.payload}
   default:
     return state;
   }
@@ -44,6 +47,7 @@ const useApplicationData = (initial) => {
    likedPhotos:initial[0],
    modalOpen:initial[1],
    selectedPhoto:initial[2],
+   photosByTopic:initial[0],
    photoData:initial[0],
    topicData:initial[0]
   }
@@ -71,6 +75,7 @@ const useApplicationData = (initial) => {
     .then(data => dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data })) //store the fetched data in payload
     .catch(error => console.error('Error:', error));
   }, []);
+  // useEffect is triggered everytime there's browser re-render(like a state change, so user can not call it!)
 
   useEffect(() => {
     fetch("/api/topics")
@@ -83,6 +88,20 @@ const useApplicationData = (initial) => {
     .then(data => dispatch({type: ACTIONS.SET_TOPIC_DATA, payload: data }))
     .catch(error => console.error('Error:', error));
   }, []);
+
+  const selectTopic = (topicId) => {
+    // console.log("topicId:", topicId);
+
+    fetch(`/api/topics/photos/${topicId}`)
+    .then(response => {
+      if(!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+      return response.json(); //return data
+    })
+    .then(data => dispatch({type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: data }))
+    .catch(error => console.error('Error:', error));
+  }
 
   const switchLike = (photoId) => {
     
@@ -121,9 +140,11 @@ const useApplicationData = (initial) => {
     likedPhotos:state.likedPhotos,
     modalOpen: state.modalOpen,
     selectedPhoto: state.selectedPhoto,
+    photosByTopic: state.photosByTopic,
     switchLike,
     openModal,
-    closeModal
+    closeModal,
+    selectTopic
   };
   // it returns an Object which contains all the states and setter functions!!!
 }
