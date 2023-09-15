@@ -29,6 +29,8 @@ function reducer(state, action) {
       return {...state, modalOpen:false}
     case ACTIONS.SET_PHOTO_DATA:
       return {...state, photoData: action.payload}
+    case ACTIONS.SET_TOPIC_DATA:
+       return {...state, topicData: action.payload}
   default:
     return state;
   }
@@ -64,9 +66,21 @@ const useApplicationData = (initial) => {
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);
       }
-      return response.json();
+      return response.json(); //return data
     })
-    .then(data => dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data }))
+    .then(data => dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data })) //store the fetched data in payload
+    .catch(error => console.error('Error:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/topics")
+    .then(response => {
+      if(!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+      return response.json(); //return data
+    })
+    .then(data => dispatch({type: ACTIONS.SET_TOPIC_DATA, payload: data }))
     .catch(error => console.error('Error:', error));
   }, []);
 
@@ -103,7 +117,7 @@ const useApplicationData = (initial) => {
 
   return {
     photoData:state.photoData,
-    // topicData,
+    topicData:state.topicData,
     likedPhotos:state.likedPhotos,
     modalOpen: state.modalOpen,
     selectedPhoto: state.selectedPhoto,

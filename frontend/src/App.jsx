@@ -69,7 +69,7 @@ const App = () => {
 
   const {
     photoData,
-    // topicData,
+    topicData,
     likedPhotos,
     modalOpen,
     selectedPhoto,
@@ -95,7 +95,7 @@ const App = () => {
       {/* {photos} */}
       {/* <PhotoList /> */}
       
-      <HomeRoute openModal={openModal} likedPhotos={likedPhotos} switchLike={switchLike} topics={[]} photos={photoData}/>
+      <HomeRoute openModal={openModal} likedPhotos={likedPhotos} switchLike={switchLike} topics={topicData} photos={photoData}/>
       {/* HomeRoute is the main page */}
       {modalOpen && <PhotoDetailsModal closeModal={closeModal} selectedPhoto={selectedPhoto} likedPhotos={likedPhotos} switchLike={switchLike} />}
       {/* each photo in PhotoListItem onClick to triger openModal(), to set the modalOpen state as true */}
