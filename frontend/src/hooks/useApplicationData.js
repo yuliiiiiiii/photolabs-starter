@@ -1,16 +1,19 @@
-import { useState, useReducer } from "react";
-import photos from "mocks/photos";
+import { useState, useReducer, useEffect } from "react";
+// import photos from "mocks/photos";
+// import topics from "mocks/topics";
 
 // This is the custom hook to store all the state data from App component
 export const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
-  // SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
   // DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
   CLOSE_MODAL: 'CLOSE_MODAL'
 }
+
+
 
 function reducer(state, action) {
   switch (action.type) {
@@ -20,10 +23,12 @@ function reducer(state, action) {
     case ACTIONS.FAV_PHOTO_REMOVED:
       return {...state, likedPhotos:state.likedPhotos.filter(Id => Id != action.payload.photoId)}
     case ACTIONS.SELECT_PHOTO:
-      const photoData = photos.filter(PhotoListItemData => PhotoListItemData["id"]===action.payload.photoId)[0];
+      const photoData = state.photoData.filter(PhotoListItemData => PhotoListItemData["id"]===action.payload.photoId)[0];
       return {...state, modalOpen:true, selectedPhoto:photoData}
     case ACTIONS.CLOSE_MODAL:
       return {...state, modalOpen:false}
+    case ACTIONS.SET_PHOTO_DATA:
+      return {...state, photoData: action.payload}
   default:
     return state;
   }
@@ -36,7 +41,9 @@ const useApplicationData = (initial) => {
   const initialState = {
    likedPhotos:initial[0],
    modalOpen:initial[1],
-   selectedPhoto:initial[2]
+   selectedPhoto:initial[2],
+   photoData:initial[0],
+   topicData:initial[0]
   }
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -50,12 +57,25 @@ const useApplicationData = (initial) => {
 
   // const [selectedPhoto, setSelectedPhoto]=useState({});
   // const [selectedPhoto, setSelectedPhoto] = useState(initial[2]);
+  
+  useEffect(()=> {
+    fetch("/api/photos")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => dispatch({type: ACTIONS.SET_PHOTO_DATA, payload: data }))
+    .catch(error => console.error('Error:', error));
+  }, []);
 
   const switchLike = (photoId) => {
     
     if(state.likedPhotos.includes(photoId)) {
     //  setLikedPhotos(likedPhotos.filter(Id => Id != photoId))
     dispatch({type: ACTIONS.FAV_PHOTO_REMOVED, payload: {photoId}})
+    // dispatch an action, which is one of the parameters of reducer functon
      // if the photoId whose FavButton got clicked, already exists in the likedPhotos array, the click will remove the photoId from likedPhotos array, in order to change the photo to unliked
     } else {
     //  setLikedPhotos([...likedPhotos, photoId])
@@ -82,6 +102,8 @@ const useApplicationData = (initial) => {
   }
 
   return {
+    photoData:state.photoData,
+    // topicData,
     likedPhotos:state.likedPhotos,
     modalOpen: state.modalOpen,
     selectedPhoto: state.selectedPhoto,

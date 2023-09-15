@@ -7,8 +7,8 @@ import React, {useState} from 'react';
 import HomeRoute from 'routes/HomeRoute';
 import './App.scss';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
-import photos from 'mocks/photos';
-import topics from 'mocks/topics';
+// import photos from 'mocks/photos';
+// import topics from 'mocks/topics';
 import useApplicationData from 'hooks/useApplicationData';
 
 // const sampleDataForPhotoListItem = {
@@ -68,6 +68,8 @@ const App = () => {
   // an array of different initial states for differnet state defination in useApplicationData
 
   const {
+    photoData,
+    // topicData,
     likedPhotos,
     modalOpen,
     selectedPhoto,
@@ -93,7 +95,7 @@ const App = () => {
       {/* {photos} */}
       {/* <PhotoList /> */}
       
-      <HomeRoute openModal={openModal} likedPhotos={likedPhotos} switchLike={switchLike} topics={topics} photos={photos}/>
+      <HomeRoute openModal={openModal} likedPhotos={likedPhotos} switchLike={switchLike} topics={[]} photos={photoData}/>
       {/* HomeRoute is the main page */}
       {modalOpen && <PhotoDetailsModal closeModal={closeModal} selectedPhoto={selectedPhoto} likedPhotos={likedPhotos} switchLike={switchLike} />}
       {/* each photo in PhotoListItem onClick to triger openModal(), to set the modalOpen state as true */}
