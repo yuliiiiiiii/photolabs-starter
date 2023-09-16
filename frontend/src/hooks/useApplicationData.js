@@ -90,8 +90,7 @@ const useApplicationData = (initial) => {
   }, []);
 
   const selectTopic = (topicId) => {
-    // console.log("topicId:", topicId);
-
+  // only do the fetch request when called!!(when user clicked a topic button), so the fetch request should be inside of a function not a useEffect!
     fetch(`/api/topics/photos/${topicId}`)
     .then(response => {
       if(!response.ok) {
